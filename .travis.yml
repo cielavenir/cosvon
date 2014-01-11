@@ -1,0 +1,23 @@
+# It is known that rbx 2.2.2 fails with "LoadError: no such file to load -- logger"
+
+language: ruby
+rvm:
+  - 1.8.7
+  - ree
+  - 1.9.2
+  - 1.9.3
+  - 2.0.0
+  - 2.1.0
+  - ruby-head
+  - jruby-18mode
+  - jruby-19mode
+  - jruby-20mode
+  - jruby-21mode
+  - jruby-head
+  - rbx-2.1.1
+  - rbx
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+    - rvm: jruby-head
+    - rvm: rbx
