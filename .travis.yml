@@ -20,4 +20,5 @@ rvm:
 matrix:
   allow_failures:
     - rvm: ruby-head
+	- rvm: jruby-21mode
     - rvm: jruby-head
