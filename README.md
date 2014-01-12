@@ -9,3 +9,10 @@ http://nabetani.sakura.ne.jp/yokohamarb/2014.01.cosvon/
 Notice: you must not publish this repository directly to rubygems.
 
 Other usages are welcomed. For example, CoSVON::csv should be useful.
+
+## Supported Ruby versions
+* Ruby 1.8.7 or later
+* jruby
+* rubinius 2.1.1 or 2.2.3 (or later, maybe)
+  * 2.2.1 and 2.2.2 are not working.
+* (Possibly) ironruby / macruby / topaz etc
