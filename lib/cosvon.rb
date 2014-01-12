@@ -2,7 +2,6 @@
 #
 # http://nabetani.sakura.ne.jp/yokohamarb/2014.01.cosvon/
 
-require 'csv'
 class CoSVON
 	# VERSION string
 	VERSION='0.0.0.1'
@@ -47,6 +46,7 @@ class CoSVON
 	end
 
 	# parses CoSVON string into Hash.
+	# parser can be CoSVON.method(:csv), CSV.method(:parse), etc...
 	def self.parse(s,parser=self.method(:csv))
 		csv=parser[s]
 		return nil if csv.empty?||csv[0].empty?||csv[0][0]!='CoSVON:0.1'

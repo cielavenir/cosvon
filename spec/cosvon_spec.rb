@@ -94,6 +94,16 @@ many extra commas,moge,,,,,,,
 	]
 ]
 
+describe "CoSVON [default]" do
+	cases.each_with_index{|e,i|
+		specify "Case #{i+1}" do
+			hash=CoSVON.parse(e[1])
+			cosvon=CoSVON.stringify(hash)
+			CoSVON.parse(cosvon).should eq e[0]
+		end
+	}
+end
+
 describe "CoSVON [CoSVON.csv]" do
 	cases.each_with_index{|e,i|
 		specify "Case #{i+1}" do
