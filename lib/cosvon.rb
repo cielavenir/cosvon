@@ -1,4 +1,4 @@
-# CoSVON: Comma Separated Value Object Notation
+# CoSVON: Comma Separated Value Object Notation (yokohamarb)
 #
 # http://nabetani.sakura.ne.jp/yokohamarb/2014.01.cosvon/
 
