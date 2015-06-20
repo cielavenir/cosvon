@@ -1,4 +1,5 @@
-require File.expand_path(File.dirname(__FILE__)+'/spec_helper')
+SPEC_DIR=File.expand_path(File.dirname(__FILE__))
+require SPEC_DIR+'/spec_helper'
 
 cases=[
 	[
@@ -123,4 +124,13 @@ describe "CoSVON [CSV.parse]" do
 			CoSVON.parse(cosvon,CSV.method(:parse)).should eq e[0]
 		end
 	}
+end
+
+if RUBY_VERSION>='1.9'
+	describe "CoSVON.csv" do
+		specify "Parsing dame backslash" do
+			s=File.read(SPEC_DIR+'/hsalskcab.csv',:encoding=>'Windows-31J').encode('UTF-8')
+			CoSVON.csv(s).should eq [['Hello "World"','我申"May you have good luck."']]
+		end
+	end
 end

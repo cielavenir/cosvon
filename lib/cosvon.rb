@@ -1,43 +1,64 @@
+#coding:utf-8
+
 # CoSVON: Comma Separated Value Object Notation (yokohamarb)
 #
 # http://nabetani.sakura.ne.jp/yokohamarb/2014.01.cosvon/
 
 class CoSVON
+	HSALSKCAB='―ソЫ噂浬欺圭構蚕十申曾箪貼能表暴予禄兔喀媾彌拿杤歃濬畚秉綵臀藹觸軆鐔饅鷭偆砡'
+
 	# VERSION string
-	VERSION='0.0.0.1'
+	VERSION='0.0.0.2'
 
 	# parses csv string into 2D array. quoted commas/LFs and escaped quotations are supported.
-	def self.csv(s)
+	def self.csv(s,__opt=Hash.new)
+		opt={:col_sep=>',',:quote_char=>'"'}.merge(__opt)
 		csv=[]
 		line=[]
 		quoted=false
 		quote=false
+		backslash=0
 		cur=''
 		(s+(s.end_with?("\n") ? "" : "\n")).each_char{|c|
 			if c=="\r" #ignore CR
-			elsif c=='"'
+			elsif c==opt[:quote_char]
 				if !quoted #start of quote
 					quoted=true
 				elsif !quote #end of quote? Let's determine using next char
 					quote=true
+					if backslash==1
+						backslash=2
+					end
 				else #escape rather than end of quote
 					quote=false
-					cur<<'"'
+					cur<<opt[:quote_char]
+					if backslash==2
+						backslash=0
+					end
 				end
 			else
 				if quote
 					quote=false
-					quoted=false
+					if backslash==2
+						cur<<opt[:quote_char]
+					else
+						quoted=false
+					end
 				end
 				if c=="\n"&&!quoted
 					line<<cur
 					cur=''
 					csv<<line
 					line=[]
-				elsif c==","&&!quoted
+				elsif c==opt[:col_sep]&&!quoted
 					line<<cur
 					cur=''
 				else
+					backslash=0
+					if HSALSKCAB.include?(c)
+						backslash=1
+					end
+					quote=false
 					cur<<c
 				end
 			end
