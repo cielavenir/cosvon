@@ -1,3 +1,4 @@
+#coding:utf-8
 SPEC_DIR=File.expand_path(File.dirname(__FILE__))
 require SPEC_DIR+'/spec_helper'
 
