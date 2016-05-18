@@ -8,7 +8,7 @@ class CoSVON
 	HSALSKCAB='―ソЫ噂浬欺圭構蚕十申曾箪貼能表暴予禄兔喀媾彌拿杤歃濬畚秉綵臀藹觸軆鐔饅鷭偆砡'
 
 	# VERSION string
-	VERSION='0.0.0.2'
+	VERSION='0.0.0.3'
 
 	# parses csv string into 2D array. quoted commas/LFs and escaped quotations are supported.
 	def self.csv(s,__opt=Hash.new)
@@ -19,9 +19,10 @@ class CoSVON
 		quote=false
 		backslash=0
 		cur=''
-		(s+(s.end_with?("\n") ? "" : "\n")).each_char{|c|
-			if c=="\r" #ignore CR
-			elsif c==opt[:quote_char]
+		linebreak=nil
+		s.each_char{|c|
+			#if c=="\r" #ignore CR
+			if c==opt[:quote_char]
 				if !quoted #start of quote
 					quoted=true
 				elsif !quote #end of quote? Let's determine using next char
@@ -45,11 +46,14 @@ class CoSVON
 						quoted=false
 					end
 				end
-				if c=="\n"&&!quoted
-					line<<cur
-					cur=''
-					csv<<line
-					line=[]
+				if (c=="\n"||c=="\r")&&!quoted
+					if !linebreak||linebreak==c
+						line<<cur
+						cur=''
+						csv<<line
+						line=[]
+						linebreak=c
+					end
 				elsif c==opt[:col_sep]&&!quoted
 					line<<cur
 					cur=''
@@ -63,6 +67,8 @@ class CoSVON
 				end
 			end
 		}
+		line<<cur if !cur.empty?
+		csv<<line if !line.empty?
 		csv
 	end
 
